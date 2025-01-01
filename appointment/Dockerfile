@@ -4,7 +4,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Copy the application code to the container
-COPY patient_service.py /app
+COPY appointment_service.py /app
 
 # Install dependencies
 RUN pip install flask pymysql
