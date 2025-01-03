@@ -24,11 +24,12 @@ def get_db_connection():
 def schedule_appointment():
     data = request.json
     phone_number = data.get('phone_number')
+    email = data.get('email')
     appointment_date = data.get('appointment_date')
     doctor_name = data.get('doctor_name')
     reason = data.get('reason')
 
-    if not phone_number or not appointment_date or not doctor_name or not reason:
+    if not phone_number or not email or not appointment_date or not doctor_name or not reason:
         return jsonify({"error": "Missing required fields"}), 400
 
     # Check if patient exists
@@ -45,8 +46,8 @@ def schedule_appointment():
 
         # Schedule the appointment
         cursor.execute(
-            "INSERT INTO appointments (patient_id, appointment_date, doctor_name, reason) VALUES (%s, %s, %s, %s)",
-            (patient_id, appointment_date, doctor_name, reason)
+            "INSERT INTO appointments (patient_id, email, appointment_date, doctor_name, reason) VALUES (%s, %s, %s, %s, %s)",
+            (patient_id, email, appointment_date, doctor_name, reason)
         )
         conn.commit()
 
@@ -79,18 +80,19 @@ def get_appointments(phone_number):
 @app.route('/appointments/<int:appointment_id>', methods=['PUT'])
 def update_appointment(appointment_id):
     data = request.json
+    email = data.get('email')
     appointment_date = data.get('appointment_date')
     doctor_name = data.get('doctor_name')
     reason = data.get('reason')
 
-    if not appointment_date and not doctor_name and not reason:
+    if not email and not appointment_date and not doctor_name and not reason:
         return jsonify({"error": "No fields to update"}), 400
 
     conn = get_db_connection()
     with conn.cursor() as cursor:
         cursor.execute(
-            "UPDATE appointments SET appointment_date=%s, doctor_name=%s, reason=%s WHERE id=%s",
-            (appointment_date, doctor_name, reason, appointment_id)
+            "UPDATE appointments SET email=%s, appointment_date=%s, doctor_name=%s, reason=%s WHERE id=%s",
+            (email, appointment_date, doctor_name, reason, appointment_id)
         )
         conn.commit()
 
