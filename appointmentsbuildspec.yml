@@ -16,9 +16,9 @@ phases:
 
       # Tag and push the appointment service image to ECR
       - echo "Tagging and pushing Docker images for appointment service..."
-      - docker tag medi_track_appointment:latest 225989377732.dkr.ecr.us-east-1.amazonaws.com/medi_track_appointment:latest
+      - docker tag medi_track_appointment:latest 225989377732.dkr.ecr.us-east-1.amazonaws.com/medi_track_appointment:blue
 
-      - docker push 225989377732.dkr.ecr.us-east-1.amazonaws.com/medi_track_appointment:latest
+      - docker push 225989377732.dkr.ecr.us-east-1.amazonaws.com/medi_track_appointment:blue
 
 
 
